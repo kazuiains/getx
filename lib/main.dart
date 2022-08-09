@@ -4,9 +4,10 @@ import 'package:getx/controllers/main_controller.dart';
 import 'package:getx/models/main_model.dart';
 
 void main() {
-  runApp(AppObs());
+  runApp(AppBuilder());
 }
 
+//menggunakan OBS
 class AppObs extends StatelessWidget {
   AppObs({Key? key}) : super(key: key);
 
@@ -14,6 +15,7 @@ class AppObs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("build");
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(),
@@ -39,38 +41,68 @@ class AppObs extends StatelessWidget {
   }
 }
 
+//menggunakan getx
 class AppGetx extends StatelessWidget {
-  const AppGetx({Key? key}) : super(key: key);
+  AppGetx({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("build");
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(),
         body: Center(
-          child: Text(""),
+          child: GetX<MainController>(
+            builder: (controller) => Column(
+              children: [
+                Text(
+                    "nama saya ${controller.model1.name} umur saya ${controller.model1.age}"),
+                Text(
+                    "salam kenal, nama saya ${controller.model2.value.name} umur saya ${controller.model2.value.age}"),
+              ],
+            ),
+            init: MainController(),
+          ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.find<MainController>().countAge();
+            Get.find<MainController>().changeUpperCase();
+          },
         ),
       ),
     );
   }
 }
 
+//menggunakan builder
 class AppBuilder extends StatelessWidget {
-  const AppBuilder({Key? key}) : super(key: key);
+  AppBuilder({Key? key}) : super(key: key);
+
+  //jika tidak ingin pakai init deklarasikan put
+  final mainC = Get.put(MainController());
 
   @override
   Widget build(BuildContext context) {
+    print("build");
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(),
         body: Center(
-          child: Text(""),
+          child: GetBuilder<MainController>(
+            builder: (controller) => Text(
+                "nama saya ${controller.model3.name} umur saya ${controller.model3.age}"),
+            // init: MainController(),
+          ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            //jika memakai init
+            // Get.find<MainController>().changeSimple();
+
+            //jika tidak memakai init
+            mainC.changeSimple();
+          },
         ),
       ),
     );

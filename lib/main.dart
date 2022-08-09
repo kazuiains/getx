@@ -4,7 +4,7 @@ import 'package:getx/controllers/main_controller.dart';
 import 'package:getx/models/main_model.dart';
 
 void main() {
-  runApp(AppBuilder());
+  runApp(AppBuilderUniqId());
 }
 
 //menggunakan OBS
@@ -23,10 +23,8 @@ class AppObs extends StatelessWidget {
             child: Obx(
           () => Column(
             children: [
-              Text(
-                  "nama saya ${controller.model1.name} umur saya ${controller.model1.age}"),
-              Text(
-                  "salam kenal, nama saya ${controller.model2.value.name} umur saya ${controller.model2.value.age}"),
+              Text("nama saya ${controller.model1.name} umur saya ${controller.model1.age}"),
+              Text("salam kenal, nama saya ${controller.model2.value.name} umur saya ${controller.model2.value.age}"),
             ],
           ),
         )),
@@ -55,10 +53,8 @@ class AppGetx extends StatelessWidget {
           child: GetX<MainController>(
             builder: (controller) => Column(
               children: [
-                Text(
-                    "nama saya ${controller.model1.name} umur saya ${controller.model1.age}"),
-                Text(
-                    "salam kenal, nama saya ${controller.model2.value.name} umur saya ${controller.model2.value.age}"),
+                Text("nama saya ${controller.model1.name} umur saya ${controller.model1.age}"),
+                Text("salam kenal, nama saya ${controller.model2.value.name} umur saya ${controller.model2.value.age}"),
               ],
             ),
             init: MainController(),
@@ -90,8 +86,7 @@ class AppBuilder extends StatelessWidget {
         appBar: AppBar(),
         body: Center(
           child: GetBuilder<MainController>(
-            builder: (controller) => Text(
-                "nama saya ${controller.model3.name} umur saya ${controller.model3.age}"),
+            builder: (controller) => Text("nama saya ${controller.model3.name} umur saya ${controller.model3.age}"),
             // init: MainController(),
           ),
         ),
@@ -102,6 +97,33 @@ class AppBuilder extends StatelessWidget {
 
             //jika tidak memakai init
             mainC.changeSimple();
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class AppBuilderUniqId extends StatelessWidget {
+  AppBuilderUniqId({Key? key}) : super(key: key);
+
+  final mainC = Get.put(MainController());
+
+  @override
+  Widget build(BuildContext context) {
+    print("build");
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: GetBuilder<MainController>(
+            id: "yusuf",
+            builder: (controller) => Text("nama saya ${controller.model4.name} umur saya ${controller.model4.age}"),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            mainC.changeSimple2();
           },
         ),
       ),

@@ -5,6 +5,7 @@ class MainController extends GetxController {
   var model1 = Main1Model();
   var model2 = Main2Model(name: "adira", age: 0).obs;
   var model3 = Main2Model(name: "adira", age: 0);
+  var model4 = Main2Model(name: "yusuf", age: 0);
 
   changeUpperCase() {
     model1.name.value = model1.name.value.toUpperCase();
@@ -26,6 +27,12 @@ class MainController extends GetxController {
     model3.name = model3.name.toUpperCase();
     model3.age = model3.age+1;
     update();
+  }
+
+  changeSimple2() {
+    model4.name = model4.name.toUpperCase();
+    model4.age = model4.age+1;
+    update(['yusuf']);
   }
 
 }
